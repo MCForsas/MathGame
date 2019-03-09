@@ -48,6 +48,10 @@ public abstract class Level {
         }
     }
 
+    public void purge(){
+        entities.removeAllElements();
+    }
+
     public int getID() {
         return ID;
     }

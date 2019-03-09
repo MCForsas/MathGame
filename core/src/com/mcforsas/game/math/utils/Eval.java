@@ -6,10 +6,44 @@ package com.mcforsas.game.math.utils;
 
 import com.mcforsas.game.math.entities.DifficultyTypes;
 
+import java.util.Stack;
+
 public class Eval {
-    private String function = "";
-    private double answer = 0.0;
+    private double answer;
+    private String calculation;
+
+    private Stack<Double> fakeAnswers = new Stack<Double>();
     private static final int MAX_CALCULATIONS = 10;
+    private int correctAnswer = 0;
+    private final int NUMBER_OF_ANSWERS = 4;
+
+    public final int MAX_NUMBER = 15;
+
+    public Eval(DifficultyTypes difficulty){
+        this.calculation = generateCalculationByDifficulty(difficulty);
+        this.answer = eval(calculation);
+
+        this.correctAnswer = Utilities.irandom(NUMBER_OF_ANSWERS - 1);
+
+        Stack<Integer> fakeNumbers = Utilities.uniqueIrandomRangeExclude(-getMaxNumberByDifficulty(difficulty), getMaxNumberByDifficulty(difficulty), NUMBER_OF_ANSWERS,0);
+
+        for(int i = 0; i < NUMBER_OF_ANSWERS; i++) {
+
+            char chosen = (Character) Utilities.choose('+', '-', '*');
+
+            switch (chosen) {
+                case '+':
+                    fakeAnswers.push(answer + fakeNumbers.get(i));
+                    break;
+                case '-':
+                    fakeAnswers.push(answer - fakeNumbers.get(i));
+                    break;
+                case '*':
+                    fakeAnswers.push(answer * fakeNumbers.get(i));
+                    break;
+            }
+        }
+    }
 
     public static double eval(final String str) {
         return new Object() {
@@ -91,23 +125,47 @@ public class Eval {
         }.parse();
     }
 
+    public int getMaxNumberByDifficulty(DifficultyTypes difficultyTypes){
+        switch (difficultyTypes){
+            case EASY:{
+                return (int) (MAX_NUMBER*(0.75f));
+            }
+
+            case NORMAL:{
+                return (int) (MAX_NUMBER*(0.75f));
+            }
+
+            case HARD: {
+                return (int) (MAX_NUMBER*(0.75f));
+            }
+
+            case EXPERT:{
+                return MAX_NUMBER;
+            }
+
+            default:{
+                return MAX_NUMBER;
+            }
+        }
+    }
+
     public String generateCalculationByDifficulty(DifficultyTypes difficulty){
 
         String calculation = "0";
 
         switch(difficulty){
             case EASY:{
-                calculation = generateCalculation(10,5,10);
+                calculation = generateCalculation((int) (MAX_NUMBER*(0.75f)),5,10);
                 break;
             }
 
             case NORMAL:{
-                calculation = generateCalculation(10,20,10);
+                calculation = generateCalculation((int) (MAX_NUMBER*(0.75f)),20,10);
                 break;
             }
 
             case HARD:{
-                calculation = generateCalculation(10,50,20);
+                calculation = generateCalculation((int) (MAX_NUMBER*(0.75f)),50,20);
                 break;
             }
 
@@ -141,5 +199,38 @@ public class Eval {
         stringBuilder.append(Utilities.irandomRange(1,maxNumber));
 
         return stringBuilder.toString();
+    }
+
+    //Generates random list of numbers with one correct answer
+    private void generateRandomAnswers(){
+
+    }
+
+    public double getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(double answer) {
+        this.answer = answer;
+    }
+
+    public String getCalculation() {
+        return calculation;
+    }
+
+    public void setCalculation(String calculation) {
+        this.calculation = calculation;
+    }
+
+    public int getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public void setCorrectAnswer(int correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
+
+    public double getFakeAnswer(int pos){
+        return fakeAnswers.get(pos);
     }
 }

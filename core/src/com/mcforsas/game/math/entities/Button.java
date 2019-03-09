@@ -10,6 +10,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mcforsas.game.math.engine.AssetLoader;
 import com.mcforsas.game.math.engine.Game;
 import com.mcforsas.game.math.levels.Level;
+import com.mcforsas.game.math.levels.LevelGame;
+import com.mcforsas.game.math.utils.Utilities;
+
+import java.text.DecimalFormat;
 //import com.mcforsas.game.math.utils.Utilities;
 
 public class Button extends Entitie{
@@ -17,17 +21,25 @@ public class Button extends Entitie{
     private float x, y;
     private boolean isCorrect;
     private Controller actionListener;
+    private TextRenderer textRenderer;
+    double answer;
+    int height = Game.WORLD_HEIGHT/5;
+    int width = Game.WORLD_WIDTH;
 
-    public Button(Level level, Controller controller, float x, float y, boolean isCorrrect) {
+    public Button(Level level, Controller controller, float x, float y, double answer) {
         super(level);
 
         this.x = x;
         this.y = y;
+        this.answer = answer;
+        this.actionListener = controller;
 
-        this.isCorrect = isCorrrect;
+        textRenderer = new TextRenderer(level, x+width/2, y+height/2);
+        textRenderer.setMaxScale(0.2f);
+
         actionListener = controller;
 
-        sprite = new Sprite(level.getLevelHandler().getAssetLoader().getTexture("sprGreen"));
+        sprite = new Sprite(Game.getAssetLoader().getTexture("sprGreen"));
         sprite.setSize(Game.WORLD_WIDTH, Game.WORLD_HEIGHT/5);
         sprite.setPosition(x,y);
     }
@@ -35,6 +47,10 @@ public class Button extends Entitie{
     @Override
     public void initialize() {
         super.initialize();
+
+        String df = new DecimalFormat("0.###").format(this.answer);
+
+        textRenderer.setText(df);
     }
 
     @Override
@@ -45,20 +61,23 @@ public class Button extends Entitie{
             float touchX = level.getLevelHandler().getTouchX();
             float touchY = level.getLevelHandler().getTouchY();
 //
-//            if(Utilities.isInRange(touchX, this.x, this.x + this.width) && Utilities.isInRange(touchY, this.y, this.y + this.height)){
-//                Gdx.app.log("DEBUG", "was clicked");
-//            }
+            if(Utilities.isInRange(touchX, this.x, this.x + this.width) && Utilities.isInRange(touchY, this.y, this.y + this.height)){
+                actionListener.buttonClicked(this);
+                //DEBUG
+            }
         }
     }
 
     @Override
     public void render(SpriteBatch spriteBatch) {
         super.render(spriteBatch);
+        textRenderer.render(spriteBatch);
     }
 
     @Override
     public void dispose() {
         super.dispose();
+        textRenderer.dispose();
     }
 
     public boolean isCorrect() {

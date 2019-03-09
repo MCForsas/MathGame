@@ -1,6 +1,11 @@
 package com.mcforsas.game.math.utils;
 
+import com.badlogic.gdx.Gdx;
+
+import java.util.Collection;
 import java.util.Random;
+import java.util.Stack;
+import java.util.Vector;
 
 /*
  * A bunch of usefull functions
@@ -9,13 +14,13 @@ import java.util.Random;
 public final class Utilities {
 
     /*
-     * Clamps a value between max and min
+     * Clamps a value between min and max
      * @param value
-     * @param max
      * @param min
+     * @param max
      * @return float clamped value
      */
-    public static float clamp(float val, float max, float min){
+    public static float clamp(float val, float min, float max){
         if(val > max){
             return max;
         }
@@ -39,7 +44,7 @@ public final class Utilities {
      * Returns random int between 0 and max
      * @return int
      */
-    public static int irandom(int max){
+    public static final int irandom(int max){
         Random r = new Random();
         return r.nextInt(max);
     }
@@ -50,7 +55,8 @@ public final class Utilities {
      */
     public static int irandomRange(int min, int max){
         Random r = new Random();
-        return (r.nextInt((max - min) + 1) + min);
+        return (r.nextInt((Math.abs(max - min)) + 1) + min);
+
     }
 
     /*
@@ -114,9 +120,72 @@ public final class Utilities {
      * @param value value to check
      * @param min min value
      * @param max max value
-     * @param return inRange is in range?
+     * @return inRange is in range?
      */
     public static boolean isInRange(float value, float min, float max){
         return (value >= min && value <= max);
+    }
+
+    /*
+     * Returns stack of random ints between min and max
+     * @param int min
+     * @param int max
+     * @param int amount
+     * @return Stack<Integer> ints
+     */
+    public static Stack<Integer> uniqueIrandomRange(int max, int min, int amount){
+        Random r = new Random();
+        Stack<Integer> usedNumbers = new Stack<Integer>();
+
+        //TODO: make exception
+
+        Integer generatedNumber;
+        for(int i = 0; i < amount; i++){
+
+            do{
+                generatedNumber = irandomRange(max, min);
+                Gdx.app.log("DEBUG",String.format("Generated: %d between %d and %d. Stack size: contains?: %b", generatedNumber, max, min, stackContains(usedNumbers, generatedNumber)));
+            }while(stackContains(usedNumbers, generatedNumber));
+            usedNumbers.push(generatedNumber);
+            //DEBUG:
+        }
+
+        return usedNumbers;
+    }
+
+    /*
+     * Checks if stack contains element
+     */
+    public static boolean stackContains(Stack<Integer> stack, Integer element){
+        for (Integer integer: stack) {
+            if(integer == element){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /*
+     * Returns stack of random ints between min and max excluding ones provided in exclude stack
+     * @param int min
+     * @param int max
+     * @param int amount
+     * @param Stack<Integer> exclude to exclude
+     * @return Stack<Integer> ints
+     */
+    public static Stack<Integer> uniqueIrandomRangeExclude(int max, int min, int amount, int excluded){
+        Random r = new Random();
+        Stack<Integer> usedNumbers = new Stack<Integer>();
+
+        Integer generatedNumber;
+        for(int i = 0; i < amount; i++){
+            do{
+                generatedNumber = irandomRange(max, min);
+            }while (stackContains(usedNumbers, generatedNumber) || excluded == generatedNumber);
+            usedNumbers.push(generatedNumber);
+        }
+
+        return usedNumbers;
     }
 }

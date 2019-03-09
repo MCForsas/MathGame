@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.mcforsas.game.math.entities.Controller;
 import com.mcforsas.game.math.levels.LevelGame;
 import com.mcforsas.game.math.entities.DifficultyTypes;
+import com.mcforsas.game.math.utils.Utilities;
 
 public class Game extends ApplicationAdapter implements InputProcessor {
     //Game world height and width, which is used for on screen coordinates.
@@ -22,7 +23,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
     private SpriteBatch batch;
     private Renderer renderer;
     private LevelHandler levelHandler;
-    private AssetLoader assetLoader;
+    public static AssetLoader assetLoader;
 
     @Override
     public void create () {
@@ -54,7 +55,6 @@ public class Game extends ApplicationAdapter implements InputProcessor {
         levelHandler = new LevelHandler(this);
 
         LevelGame levelGame = new LevelGame(levelHandler);
-        levelGame.addEntitie(new Controller(levelGame, DifficultyTypes.EXPERT));
 
         levelHandler.addLevel(levelGame);
         levelHandler.setCurrentLevel(levelGame);
@@ -136,11 +136,11 @@ public class Game extends ApplicationAdapter implements InputProcessor {
         return false;
     }
 
-    public AssetLoader getAssetLoader() {
+    public static AssetLoader getAssetLoader() {
         return assetLoader;
     }
 
-    public void setAssetLoader(AssetLoader assetLoader) {
-        this.assetLoader = assetLoader;
+    public static void setAssetLoader(AssetLoader al) {
+       assetLoader = al;
     }
 }

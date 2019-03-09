@@ -17,7 +17,7 @@ public class Renderer {
     private OrthographicCamera camera;
     private FitViewport viewport;
     private Stack<Renderable> renderables;
-    Game game;
+    private Game game;
 
     Renderer(Game game){
         this.game = game;
