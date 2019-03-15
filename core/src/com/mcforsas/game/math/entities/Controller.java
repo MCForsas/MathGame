@@ -105,6 +105,7 @@ public class Controller extends Entitie{
         for (Button b : button) {
          b.update();
         }
+
     }
 
     protected void buttonClicked(Button button){

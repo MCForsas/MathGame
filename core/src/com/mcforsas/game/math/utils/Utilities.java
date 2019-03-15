@@ -147,7 +147,6 @@ public final class Utilities {
                 Gdx.app.log("DEBUG",String.format("Generated: %d between %d and %d. Stack size: contains?: %b", generatedNumber, max, min, stackContains(usedNumbers, generatedNumber)));
             }while(stackContains(usedNumbers, generatedNumber));
             usedNumbers.push(generatedNumber);
-            //DEBUG:
         }
 
         return usedNumbers;

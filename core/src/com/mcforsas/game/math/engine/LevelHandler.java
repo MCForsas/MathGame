@@ -116,4 +116,8 @@ public class LevelHandler {
     public void setAssetLoader(AssetLoader assetLoader) {
         this.assetLoader = assetLoader;
     }
+
+    public void reset(){
+        setCurrentLevel(levels.firstElement());
+    }
 }

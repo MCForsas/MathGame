@@ -15,13 +15,13 @@ public class LevelGame extends Level{
     private final float DIFF_EASY = 1f;
     private final float DIFF_NORMAL = 1.5f;
     private final float DIFF_HARD = 2f;
-    private final float DIFF_EXPERT = 2.5f;
+    private final float DIFF_EXPERT = 3f;
 
     private final float PUNISH = 10;
     private double time = 0;
 
     private int completed = 0;
-    private final int TASK_SIZE = 5;
+    private final int TASK_SIZE = 10;
     private boolean gameFinished = false;
 
     private Controller controller;
@@ -70,7 +70,6 @@ public class LevelGame extends Level{
         time += deltaTime;
         if(TASK_SIZE > completed + 1){
             completed++;
-            //Debug
             purge();
             initialize();
         }else{
@@ -84,6 +83,9 @@ public class LevelGame extends Level{
             super.update();
             deltaTime += 0.01;
             controller.setDeltaTime(deltaTime);
+        }
+        if(endScore != null){
+            endScore.update();
         }
     }
 
