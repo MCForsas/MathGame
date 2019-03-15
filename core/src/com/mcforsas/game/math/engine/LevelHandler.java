@@ -39,6 +39,10 @@ public class LevelHandler {
         if(!paused && currentLevel.isInitialized()){
             currentLevel.update();
         }
+
+        if(isTouched){
+            isTouched = false;
+        }
     }
 
     public void render(SpriteBatch spriteBatch){

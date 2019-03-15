@@ -9,10 +9,12 @@ import com.mcforsas.game.math.entities.Entitie;
 import java.util.Vector;
 
 public abstract class Level {
-    private int ID = 0;
-    private Vector<Entitie> entities = new Vector<Entitie>();
-    private LevelHandler levelHandler;
-    private boolean isInitialized = false;
+    protected int ID = 0;
+    protected Vector<Entitie> entities = new Vector<Entitie>();
+    protected LevelHandler levelHandler;
+    protected boolean isInitialized = false;
+    protected boolean pause = false;
+
 
     public Level(LevelHandler levelHandler){
         this.levelHandler = levelHandler;
@@ -31,6 +33,10 @@ public abstract class Level {
     }
 
     public void update(){
+        if(pause){
+            return;
+        }
+
         for(Entitie entitie : entities){
             entitie.update();
         }

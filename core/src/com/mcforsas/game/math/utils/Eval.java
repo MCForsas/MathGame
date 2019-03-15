@@ -25,7 +25,8 @@ public class Eval {
 
         this.correctAnswer = Utilities.irandom(NUMBER_OF_ANSWERS - 1);
 
-        Stack<Integer> fakeNumbers = Utilities.uniqueIrandomRangeExclude(-getMaxNumberByDifficulty(difficulty), getMaxNumberByDifficulty(difficulty), NUMBER_OF_ANSWERS,0);
+        int[] excluded = {0,1};
+        Stack<Integer> fakeNumbers = Utilities.uniqueIrandomRangeExclude(-getMaxNumberByDifficulty(difficulty), getMaxNumberByDifficulty(difficulty), NUMBER_OF_ANSWERS,excluded);
 
         for(int i = 0; i < NUMBER_OF_ANSWERS; i++) {
 

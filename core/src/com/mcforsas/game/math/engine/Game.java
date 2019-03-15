@@ -10,10 +10,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.mcforsas.game.math.entities.Controller;
-import com.mcforsas.game.math.levels.LevelGame;
 import com.mcforsas.game.math.entities.DifficultyTypes;
-import com.mcforsas.game.math.utils.Utilities;
+import com.mcforsas.game.math.levels.LevelGame;
 
 public class Game extends ApplicationAdapter implements InputProcessor {
     //Game world height and width, which is used for on screen coordinates.
@@ -54,7 +52,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
         levelHandler = new LevelHandler(this);
 
-        LevelGame levelGame = new LevelGame(levelHandler);
+        LevelGame levelGame = new LevelGame(levelHandler, DifficultyTypes.EASY);
 
         levelHandler.addLevel(levelGame);
         levelHandler.setCurrentLevel(levelGame);

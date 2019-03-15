@@ -21,6 +21,7 @@ public class TextRenderer extends Entitie {
     private GlyphLayout layout;
     private float maxScale = 100;
     private  float minScale = 0.01f;
+    private boolean centerText = true;
 
     public TextRenderer(Level level, float x, float y) {
         super(level);
@@ -39,7 +40,12 @@ public class TextRenderer extends Entitie {
 
     @Override
     public void render(SpriteBatch spriteBatch) {
-        centerText();
+        if(centerText) {
+            centerText();
+        }else{
+            drawX = x;
+            drawY = y;
+        }
         super.render(spriteBatch);
         font.setColor(Color.WHITE);
         font.draw(spriteBatch, text, drawX, drawY);
@@ -52,7 +58,6 @@ public class TextRenderer extends Entitie {
     }
 
     private void centerText(){
-        //Debug
         float scale = 1f/this.text.length();
         scale = Utilities.clamp(scale, minScale, maxScale);
 
@@ -112,5 +117,13 @@ public class TextRenderer extends Entitie {
 
     public void setMinScale(float minScale) {
         this.minScale = minScale;
+    }
+
+    public boolean isCenterText() {
+        return centerText;
+    }
+
+    public void setCenterText(boolean centerText) {
+        this.centerText = centerText;
     }
 }

@@ -20,9 +20,12 @@ public class Controller extends Entitie{
     private DifficultyTypes difficulty;
     private String answer;
     private TextRenderer textRenderer;
+    private TextRenderer score;
     private boolean isInitialized = false;
     LevelGame levelGame;
-//    private BitmapFont font;
+
+    private double deltaTime = 0;
+//    private BitmapFont font
 
     private Stack<Button> button = new Stack<Button>();
 
@@ -36,6 +39,9 @@ public class Controller extends Entitie{
         this.levelGame = (LevelGame) level;
         this.difficulty = difficulty;
         textRenderer = new TextRenderer(this.level, Game.WORLD_WIDTH/2f, Game.WORLD_HEIGHT - Game.WORLD_HEIGHT/10f);
+        textRenderer.setMaxScale(0.2f);
+//        score = new TextRenderer(this.level, Game.WORLD_WIDTH/2f, Game.WORLD_HEIGHT - Game.WORLD_HEIGHT/10f);
+//        score.setCenterText(false);
     }
 
     @Override
@@ -95,17 +101,14 @@ public class Controller extends Entitie{
     @Override
     public void update() {
         boolean touch = level.getLevelHandler().isTouched();
-        //setQuestion(eval.generateCalculationByDifficulty(difficulty));
+
         for (Button b : button) {
          b.update();
         }
     }
 
     protected void buttonClicked(Button button){
-        if(button.isCorrect()){
-            levelGame.reset();
-            initialize();
-        }
+        levelGame.onClick(button.isCorrect());
     }
 
     private void generateNewQuestion(){
@@ -131,5 +134,7 @@ public class Controller extends Entitie{
         textRenderer.setText(question);
     }
 
-
+    public void setDeltaTime(double deltaTime) {
+        this.deltaTime = deltaTime;
+    }
 }

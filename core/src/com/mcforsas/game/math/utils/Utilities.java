@@ -153,6 +153,15 @@ public final class Utilities {
         return usedNumbers;
     }
 
+    public static boolean isInArray(int[] array, int searched) {
+        for (int o : array) {
+            if (o == searched)
+                return true;
+        }
+
+        return false;
+    }
+
     /*
      * Checks if stack contains element
      */
@@ -174,7 +183,7 @@ public final class Utilities {
      * @param Stack<Integer> exclude to exclude
      * @return Stack<Integer> ints
      */
-    public static Stack<Integer> uniqueIrandomRangeExclude(int max, int min, int amount, int excluded){
+    public static Stack<Integer> uniqueIrandomRangeExclude(int max, int min, int amount, int... excluded){
         Random r = new Random();
         Stack<Integer> usedNumbers = new Stack<Integer>();
 
@@ -182,7 +191,7 @@ public final class Utilities {
         for(int i = 0; i < amount; i++){
             do{
                 generatedNumber = irandomRange(max, min);
-            }while (stackContains(usedNumbers, generatedNumber) || excluded == generatedNumber);
+            }while (stackContains(usedNumbers, generatedNumber) || isInArray(excluded, generatedNumber));
             usedNumbers.push(generatedNumber);
         }
 

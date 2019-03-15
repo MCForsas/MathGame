@@ -63,14 +63,13 @@ public class Button extends Entitie{
 //
             if(Utilities.isInRange(touchX, this.x, this.x + this.width) && Utilities.isInRange(touchY, this.y, this.y + this.height)){
                 actionListener.buttonClicked(this);
-                //DEBUG
             }
         }
     }
 
     @Override
     public void render(SpriteBatch spriteBatch) {
-        super.render(spriteBatch);
+        //super.render(spriteBatch);
         textRenderer.render(spriteBatch);
     }
 

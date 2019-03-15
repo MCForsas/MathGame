@@ -22,4 +22,9 @@ public abstract class Entitie extends Renderable {
     public void update(){
 
     }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+    }
 }
