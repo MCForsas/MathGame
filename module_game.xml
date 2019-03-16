@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_game" default="compile.module.game">
+  <dirname property="module.game.basedir" file="${ant.file.module_game}"/>
+  
+  <property name="module.jdk.home.game" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.game" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.game" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.game" value="-encoding UTF-8 -source 7 -target 7 ${compiler.args}"/>
+  
+  <property name="game.output.dir" value="${module.game.basedir}/classes/production/Game"/>
+  <property name="game.testoutput.dir" value="${module.game.basedir}/classes/test/Game"/>
+  
+  <path id="game.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="game.module.production.classpath">
+    <path refid="${module.jdk.classpath.game}"/>
+  </path>
+  
+  <path id="game.runtime.production.module.classpath">
+    <pathelement location="${game.output.dir}"/>
+  </path>
+  
+  <path id="game.module.classpath">
+    <path refid="${module.jdk.classpath.game}"/>
+    <pathelement location="${game.output.dir}"/>
+  </path>
+  
+  <path id="game.runtime.module.classpath">
+    <pathelement location="${game.testoutput.dir}"/>
+    <pathelement location="${game.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.game">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.game">
+    <patternset refid="excluded.from.module.game"/>
+  </patternset>
+  
+  
+  <target name="compile.module.game" depends="compile.module.game.production,compile.module.game.tests" description="Compile module Game"/>
+  
+  <target name="compile.module.game.production" depends="register.custom.compilers" description="Compile module Game; production classes"/>
+  
+  <target name="compile.module.game.tests" depends="register.custom.compilers,compile.module.game.production" description="compile module Game; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.game" description="cleanup module">
+    <delete dir="${game.output.dir}"/>
+    <delete dir="${game.testoutput.dir}"/>
+  </target>
+</project>
